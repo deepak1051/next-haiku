@@ -1,15 +1,22 @@
-import Link from 'next/link';
-import { register } from '../actions/userController';
+import Dashboard from '../components/Dashboard';
 import RegisterForm from '../components/RegisterForm';
+import { getUserFromCookie } from '../lib/getUser';
 
-export default function Page() {
+export default async function Page() {
+  const user = await getUserFromCookie();
   return (
     <>
-      <p className="text-center text-3xl text-gray-600 mb-5">
-        Don&rsquo;t have an account <strong>Create One</strong>
-      </p>
+      {user ? (
+        <Dashboard user={user} />
+      ) : (
+        <>
+          <p className="text-center text-3xl text-gray-600 mb-5">
+            Don&rsquo;t have an account <strong>Create One</strong>
+          </p>
 
-      <RegisterForm />
+          <RegisterForm />
+        </>
+      )}
     </>
   );
 }

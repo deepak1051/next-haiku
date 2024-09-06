@@ -6,8 +6,6 @@ import { register } from '../actions/userController';
 export default function RegisterForm() {
   const [formState, formAction] = useFormState(register, {});
 
-  console.log(formState);
-
   return (
     <form action={formAction} className="max-w-sm mx-auto">
       <div className="mb-3">
