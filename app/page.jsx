@@ -1,18 +1,36 @@
 import Link from 'next/link';
+import { register } from '../actions/userController';
 
 export default function Page() {
   return (
-    <div>
-      <h2 className="text-3xl text-blue-400">hello</h2>
-
-      <Link href="/login" className="btn">
-        login page
-      </Link>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo architecto
-        non ab omnis unde, quia ullam expedita, tempore explicabo esse qui dicta
-        atque reprehenderit beatae earum nobis ratione, fugit blanditiis?{' '}
+    <>
+      <p className="text-center text-3xl text-gray-600 mb-5">
+        Don&rsquo;t have an account <strong>Create One</strong>
       </p>
-    </div>
+
+      <form action={register} className="max-w-xs mx-auto">
+        <div className="mb-3">
+          <input
+            name="username"
+            autoComplete={false}
+            type="text"
+            placeholder="Username"
+            className="input input-bordered w-full max-w-xs"
+          />
+        </div>
+
+        <div className="mb-3">
+          <input
+            name="password"
+            autoComplete={false}
+            type="password"
+            placeholder="Password"
+            className="input input-bordered w-full max-w-xs"
+          />
+        </div>
+
+        <button className="btn btn-primary">Create Account</button>
+      </form>
+    </>
   );
 }
