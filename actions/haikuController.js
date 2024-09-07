@@ -109,7 +109,7 @@ export const editHaiku = async (prevState, formData) => {
   if (typeof haikuId != 'string') haikuId = '';
 
   const haikuInQuestion = await haikusCollection.findOne({
-    _id: ObjectId.cacheHexString(haikuId),
+    _id: ObjectId.createFromHexString(haikuId),
   });
 
   if (haikuInQuestion.author.toString() !== user.userId) {
@@ -119,6 +119,32 @@ export const editHaiku = async (prevState, formData) => {
     { _id: ObjectId.createFromHexString(haikuId) },
     { $set: results.ourHaiku }
   );
+
+  return redirect('/');
+};
+
+export const deleteHaiku = async (formData) => {
+  const user = await getUserFromCookie();
+
+  if (!user) {
+    redirect('/');
+  }
+
+  const haikusCollection = await getCollection('haikus');
+
+  let haikuId = formData.get('id');
+  if (typeof haikuId != 'string') haikuId = '';
+
+  const haikuInQuestion = await haikusCollection.findOne({
+    _id: ObjectId.createFromHexString(haikuId),
+  });
+
+  if (haikuInQuestion.author.toString() !== user.userId) {
+    return redirect('/');
+  }
+  await haikusCollection.findOneAndDelete({
+    _id: ObjectId.createFromHexString(haikuId),
+  });
 
   return redirect('/');
 };
